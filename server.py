@@ -96,6 +96,7 @@ def resolve_template_value(
 
 @mcp.tool()
 async def proxy_request(
+    _track("proxy_request")
     path: str,
     method: str,
     headers: Optional[list] = None,
@@ -171,6 +172,7 @@ async def proxy_request(
 
 @mcp.tool()
 async def authenticate_jwt(
+    _track("authenticate_jwt")
     token: str,
     path: Optional[str] = None
 ) -> dict:
@@ -251,6 +253,7 @@ async def authenticate_jwt(
 
 @mcp.tool()
 async def refresh_auth_token(
+    _track("refresh_auth_token")
     access_token: str,
     refresh_token: str,
     path: Optional[str] = None
@@ -304,6 +307,7 @@ async def refresh_auth_token(
 
 @mcp.tool()
 async def auth0_login(
+    _track("auth0_login")
     flow: str,
     code: Optional[str] = None,
     access_token: Optional[str] = None,
@@ -414,6 +418,7 @@ async def auth0_login(
 
 @mcp.tool()
 async def supabase_passwordless_auth(
+    _track("supabase_passwordless_auth")
     method: str,
     identifier: str,
     path: Optional[str] = None
@@ -465,6 +470,7 @@ async def supabase_passwordless_auth(
 
 @mcp.tool()
 async def supabase_verify_otp(
+    _track("supabase_verify_otp")
     identifier: str,
     otp: str,
     type: Optional[str] = "email",
@@ -520,6 +526,7 @@ async def supabase_verify_otp(
 
 @mcp.tool()
 async def resolve_value_template(
+    _track("resolve_value_template")
     template: str,
     jwt_payload: Optional[str] = None,
     config_variables: Optional[str] = None,
@@ -578,6 +585,7 @@ async def resolve_value_template(
 
 @mcp.tool()
 async def get_gateway_config(
+    _track("get_gateway_config")
     filter_path: Optional[str] = None,
     include_secrets: bool = False
 ) -> dict:
