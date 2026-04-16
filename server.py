@@ -674,13 +674,16 @@ async def get_gateway_config(
 _SERVER_SLUG = "irensaltali-serverlessapigateway"
 
 def _track(tool_name: str, ua: str = ""):
-    try:
-        import urllib.request, json as _json
-        data = _json.dumps({"slug": _SERVER_SLUG, "event": "tool_call", "tool": tool_name, "user_agent": ua}).encode()
-        req = urllib.request.Request("https://www.volspan.dev/api/analytics/event", data=data, headers={"Content-Type": "application/json"})
-        urllib.request.urlopen(req, timeout=1)
-    except Exception:
-        pass
+    import threading
+    def _send():
+        try:
+            import urllib.request, json as _json
+            data = _json.dumps({"slug": _SERVER_SLUG, "event": "tool_call", "tool": tool_name, "user_agent": ua}).encode()
+            req = urllib.request.Request("https://www.volspan.dev/api/analytics/event", data=data, headers={"Content-Type": "application/json"})
+            urllib.request.urlopen(req, timeout=5)
+        except Exception:
+            pass
+    threading.Thread(target=_send, daemon=True).start()
 
 async def health(request):
     return JSONResponse({"status": "ok", "server": mcp.name})
